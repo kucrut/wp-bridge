@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * Plugin Name: Bridge
+ * Description: Additional REST API endpoints and functionalities.
+ * Version: 0.1.0
+ * Author: Dzikri Aziz
+ * Author URI: http://kucrut.org
+ * Plugin URI: https://github.com/kucrut/wp-bridge
+ * License: GPLv2
+ */
+
+/**
+ * Load plugin
+ *
+ * @wp_hook action plugins_loaded
+ */
+function bridge_load() {
+	if ( ! class_exists( 'WP_REST_Controller' ) ) {
+		return;
+	}
+
+	$inc_dir = dirname( __FILE__ ) . '/includes';
+
+	require_once $inc_dir . '/extra.php';
+
+	require_once $inc_dir . '/walker-nav-menu.php';
+	require_once $inc_dir . '/endpoints/menus.php';
+
+	require_once $inc_dir . '/post.php';
+	Bridge_Rest_Post_Modifier::init();
+
+	add_action( 'rest_api_init', 'bridge_register_routes' );
+}
+add_action( 'plugins_loaded', 'bridge_load' );
+
+
+/**
+ * Register our custom routes.
+ *
+ * @wp_action hook rest_api_init
+ */
+function bridge_register_routes() {
+	$menu_items_controller = new Bridge_Menu_Items_Controller;
+	$menu_items_controller->register_routes();
+}
+
+
+/**
+ * Check if we need to filter the result of API request.
+ *
+ * Only requests came from listed clients will be filtered.
+ *
+ * @param  WP_REST_Request $request Request.
+ * @return bool
+ */
+function bridge_should_filter_result( $request ) {
+	$headers = $request->get_headers();
+	if ( ! array_key_exists( 'x_requested_with', $headers ) ) {
+		return false;
+	}
+
+	$client_ids = array_filter( (array) apply_filters( 'bridge_client_ids', array() ) );
+	if ( empty( $client_ids ) ) {
+		return false;
+	}
+
+	$clients_found = array_intersect( $client_ids, $headers['x_requested_with'] );
+
+	return ( ! empty( $clients_found ) );
+}
+
+
+/**
+ * Strip home URL from string
+ *
+ * @param  string $string Text.
+ * @return string
+ */
+function bridge_strip_home_url( $string ) {
+	return str_replace( home_url(), '', $string );
+}
