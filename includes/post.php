@@ -102,7 +102,7 @@ class Bridge_Rest_Post_Modifier {
 		$mods = self::$modifier_map[ $post->post_type ];
 
 		foreach ( $mods as $post_type => $callback ) {
-			$data = call_user_func( array( __CLASS__, $callback ), $data );
+			$data = call_user_func( array( __CLASS__, $callback ), $data, $post );
 		}
 
 		// Common
