@@ -30,6 +30,9 @@ function bridge_load() {
 	require_once $inc_dir . '/post.php';
 	Bridge_Rest_Post_Modifier::init();
 
+	require_once $inc_dir . '/term.php';
+	Bridge_Rest_Term_Modifier::init();
+
 	add_action( 'rest_api_init', 'bridge_register_routes' );
 }
 add_action( 'plugins_loaded', 'bridge_load' );
