@@ -19,7 +19,9 @@ class Bridge_Rest_Post_Modifier {
 			'cleanup_content',
 			'convert_term_ids_to_object',
 		),
-		'attachment' => array(),
+		'attachment' => array(
+			'add_attachment_parent',
+		),
 	);
 
 	/**
@@ -162,6 +164,31 @@ class Bridge_Rest_Post_Modifier {
 
 			$data[ $key ] = $terms;
 		}
+
+		return $data;
+	}
+
+
+	/**
+	 * Add parent post to attachment data
+	 *
+	 * @param  array   $data Result data.
+	 * @param  WP_Post $post Attachment post object.
+	 * @return array
+	 */
+	protected static function add_attachment_parent( $data, $post ) {
+		$parent = get_post( $post->post_parent );
+		if ( ! $parent ) {
+			return $data;
+		}
+
+		$data['parent_post'] = array(
+			'id'    => $parent->ID,
+			'link'  => bridge_strip_home_url( get_permalink( $parent ) ),
+			'title' => array(
+				'rendered' => get_the_title( $parent ),
+			),
+		);
 
 		return $data;
 	}
