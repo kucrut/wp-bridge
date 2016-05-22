@@ -17,18 +17,20 @@ if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
 
 require $test_root . '/includes/functions.php';
 
+define( 'BRIDGE_TESTS_PLUGINS_DIR', dirname( dirname( dirname( __FILE__ ) ) ) );
+define( 'BRIDGE_TESTS_BRIDGE_DIR', BRIDGE_TESTS_PLUGINS_DIR . '/bridge' );
+define( 'BRIDGE_TESTS_WP_API_DIR', BRIDGE_TESTS_PLUGINS_DIR . '/wp-api' );
+
 // Activate plugin.
 function _manually_load_plugin() {
-	$bridge_dir  = dirname( dirname( __FILE__ ) );
-	$plugins_dir = dirname( $bridge_dir );
-
 	// WP API.
-	require $plugins_dir . '/wp-api/plugin.php';
+	require_once BRIDGE_TESTS_WP_API_DIR . '/plugin.php';
 
 	// Bridge.
-	require $bridge_dir . '/bridge.php';
+	require_once BRIDGE_TESTS_BRIDGE_DIR . '/bridge.php';
 	bridge_load();
 }
 tests_add_filter( 'plugins_loaded', '_manually_load_plugin' );
 
-require $test_root . '/includes/bootstrap.php';
+require_once $test_root . '/includes/bootstrap.php';
+require_once BRIDGE_TESTS_WP_API_DIR . '/tests/class-wp-test-spy-rest-server.php';
