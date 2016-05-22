@@ -31,19 +31,4 @@ class Bridge_Test_Plugin extends WP_UnitTestCase {
 
 		$this->assertEquals( 10, has_action( 'rest_api_init', 'bridge_register_routes' ) );
 	}
-
-
-	/**
-	 * Make sure our routes are registered
-	 *
-	 * @covers ::bridge_register_routes
-	 */
-	function test_bridge_register_routes() {
-		$routes = $this->server->get_routes();
-
-		$this->assertArrayHasKey( '/bridge/v1/menus/(?P<id>[\d]+)', $routes );
-		$this->assertCount( 1, $routes['/bridge/v1/menus/(?P<id>[\d]+)'] );
-		$this->assertArrayHasKey( '/bridge/v1/menus/(?P<location>[\w-]+)', $routes );
-		$this->assertCount( 1, $routes['/bridge/v1/menus/(?P<location>[\w-]+)'] );
-	}
 }
