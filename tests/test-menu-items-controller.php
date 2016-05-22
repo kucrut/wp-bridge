@@ -101,10 +101,16 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 	}
 
 
-	public function test_get_items_by_id() {
-		$request  = new WP_REST_Request( 'GET', '/bridge/v1/menus/' . $this->menu->term_id );
+	public function get_menu( $id_or_location ) {
+		$request  = new WP_REST_Request( 'GET', '/bridge/v1/menus/' . $id_or_location );
 		$response = $this->server->dispatch( $request );
-		$data     = $response->get_data();
+
+		return $response->get_data();
+	}
+
+
+	public function test_get_menu_by_id() {
+		$data = $this->get_menu( $this->menu->term_id );
 
 		$this->assert_menu( $data );
 	}
