@@ -9,8 +9,19 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 	 */
 	protected $menu;
 
+	/**
+	 * @var string
+	 */
 	protected $menu_title = 'Menu';
 
+	/**
+	 * @var integer
+	 */
+	protected $menu_item_id;
+
+	/**
+	 * @var string
+	 */
 	protected $menu_item_title = 'Greetings';
 
 
@@ -26,6 +37,7 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 		) );
 
 		$this->menu = wp_get_nav_menu_object( $menu_id );
+		$this->menu_item_id = $item_id;
 	}
 
 
@@ -70,15 +82,21 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 
 	protected function assert_menu( $data ) {
 		$this->assertNotEmpty( $data );
+
 		$this->assertArrayHasKey( 'id', $data );
+		$this->assertEquals( $this->menu->term_id, $data['id'] );
+
 		$this->assertArrayHasKey( 'name', $data );
-		$this->assertEquals( $data['name'], $this->menu_title );
+		$this->assertEquals( $this->menu_title, $data['name'] );
+
 		$this->assertArrayHasKey( 'slug', $data );
 		$this->assertArrayHasKey( 'description', $data );
+
 		$this->assertArrayHasKey( 'items', $data );
 		$this->assertCount( 1, $data['items'] );
 
 		$menu_item = $data['items'][0];
+		$this->assertEquals( $menu_item['id'], $this->menu_item_id );
 		$this->assertEquals( $menu_item['title'], $this->menu_item_title );
 	}
 
