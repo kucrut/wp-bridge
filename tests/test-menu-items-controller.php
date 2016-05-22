@@ -13,6 +13,17 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 
 
 	/**
+	* Delete the $wp_rest_server global when cleaning up scope.
+	*/
+	public function clean_up_global_scope() {
+		global $wp_rest_server;
+		$wp_rest_server = null;
+
+		parent::clean_up_global_scope();
+	}
+
+
+	/**
 	 * Make sure our routes are registered
 	 *
 	 * @covers Bridge_Menu_Items_Controller::register_routes
