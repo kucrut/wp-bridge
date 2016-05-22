@@ -32,5 +32,13 @@ function _manually_load_plugin() {
 }
 tests_add_filter( 'plugins_loaded', '_manually_load_plugin' );
 
+
+function _register_menu_locations() {
+	register_nav_menus( array(
+		'bridge' => 'Bridge Test',
+	) );
+}
+tests_add_filter( 'after_setup_theme', '_register_menu_locations' );
+
 require_once $test_root . '/includes/bootstrap.php';
 require_once BRIDGE_TESTS_WP_API_DIR . '/tests/class-wp-test-spy-rest-server.php';

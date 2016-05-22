@@ -12,6 +12,11 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 	/**
 	 * @var string
 	 */
+	protected $menu_location = 'bridge';
+
+	/**
+	 * @var string
+	 */
 	protected $menu_title = 'Menu';
 
 	/**
@@ -34,6 +39,10 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 			'menu-item-object-id' => $post_id,
 			'menu-item-title'     => $this->menu_item_title,
 			'menu-item-status'    => 'publish',
+		) );
+
+		set_theme_mod( 'nav_menu_locations', array(
+			$this->menu_location => $menu_id,
 		) );
 
 		$this->menu = wp_get_nav_menu_object( $menu_id );
@@ -111,6 +120,13 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 
 	public function test_get_menu_by_id() {
 		$data = $this->get_menu( $this->menu->term_id );
+
+		$this->assert_menu( $data );
+	}
+
+
+	public function test_get_menu_by_location() {
+		$data = $this->get_menu( $this->menu_location );
 
 		$this->assert_menu( $data );
 	}
