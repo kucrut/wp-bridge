@@ -42,6 +42,8 @@ class Bridge_Test_Plugin extends WP_UnitTestCase {
 		$routes = $this->server->get_routes();
 
 		$this->assertArrayHasKey( '/bridge/v1/menus/(?P<id>[\d]+)', $routes );
+		$this->assertCount( 1, $routes['/bridge/v1/menus/(?P<id>[\d]+)'] );
 		$this->assertArrayHasKey( '/bridge/v1/menus/(?P<location>[\w-]+)', $routes );
+		$this->assertCount( 1, $routes['/bridge/v1/menus/(?P<location>[\w-]+)'] );
 	}
 }
