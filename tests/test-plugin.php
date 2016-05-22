@@ -51,4 +51,13 @@ class Bridge_Test_Plugin extends WP_UnitTestCase {
 		$request->set_header( 'X-Requested-With', $this->client_id );
 		$this->assertTrue( bridge_should_filter_result( $request ) );
 	}
+
+
+	/**
+	 * @covers ::bridge_strip_home_url
+	 */
+	public function test_bridge_strip_home_url() {
+		$stripped = bridge_strip_home_url( get_stylesheet_uri() );
+		$this->assertFalse( strpos( $stripped, home_url() ) );
+	}
 }
