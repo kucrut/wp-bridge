@@ -1,6 +1,6 @@
 <?php
 
-class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
+class Bridge_Test_REST_Menu_Items_Controller extends Bridge_Test_Case {
 
 	/**
 	 * Menu
@@ -55,22 +55,6 @@ class Bridge_Test_REST_Menu_Items_Controller extends WP_UnitTestCase {
 
 		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
 		$this->create_menu();
-
-		/** @var WP_REST_Server $wp_rest_server */
-		global $wp_rest_server;
-		$this->server = $wp_rest_server = new WP_Test_Spy_REST_Server;
-		do_action( 'rest_api_init' );
-	}
-
-
-	/**
-	* Delete the $wp_rest_server global when cleaning up scope.
-	*/
-	public function clean_up_global_scope() {
-		global $wp_rest_server;
-		$wp_rest_server = null;
-
-		parent::clean_up_global_scope();
 	}
 
 

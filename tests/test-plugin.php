@@ -1,22 +1,6 @@
 <?php
 
-class Bridge_Test_Plugin extends WP_UnitTestCase {
-
-	protected $client_id = 'minnie';
-
-
-	public function setUp() {
-		parent::setUp();
-
-		add_filter( 'bridge_client_ids', array( $this, '_register_client_id' ) );
-	}
-
-
-	public function _register_client_id( $client_ids ) {
-		$client_ids[] = $this->client_id;
-
-		return $client_ids;
-	}
+class Bridge_Test_Plugin extends Bridge_Test_Case {
 
 	/**
 	 * Make sure all needed classes are loaded and actions are added
