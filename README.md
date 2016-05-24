@@ -14,10 +14,89 @@ It provides a few extra endpoints and modifies the results of some WP API reques
 Endpoint: `/wp-json/wp/v2/formats`
 Just like [categories](http://v2.wp-api.org/reference/categories/), but for post formats.
 
-
 ### Menus
 * By Menu ID: `/wp-json/bridge/v1/menus/<id>`
 * By Menu Location: `/wp-json/bridge/v1/menus/<location>`
+
+```json
+{
+  "id": 2,
+  "name": "Primary",
+  "slug": "primary",
+  "description": "",
+  "items": [
+    {
+      "id": 4,
+      "order": 1,
+      "parent": 0,
+      "title": "Home",
+      "url": "/",
+      "attr": "",
+      "target": "",
+      "classes": [],
+      "xfn": "",
+      "description": "",
+      "object_id": 4,
+      "object": "custom",
+      "type": "custom",
+      "type_label": "Custom Link",
+      "children": [
+        {
+          "id": 29,
+          "order": 2,
+          "parent": 4,
+          "title": "WordPress",
+          "url": "http://w.org",
+          "attr": "",
+          "target": "",
+          "classes": [],
+          "xfn": "",
+          "description": "",
+          "object_id": 29,
+          "object": "custom",
+          "type": "custom",
+          "type_label": "Custom Link",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "order": 3,
+      "parent": 0,
+      "title": "Sample Page",
+      "url": "/sample-page/",
+      "attr": "",
+      "target": "",
+      "classes": [],
+      "xfn": "",
+      "description": "",
+      "object_id": 2,
+      "object": "page",
+      "type": "post_type",
+      "type_label": "Page",
+      "children": []
+    },
+    {
+      "id": 6,
+      "order": 4,
+      "parent": 0,
+      "title": "Uncategorized",
+      "url": "/blog/category/uncategorized/",
+      "attr": "",
+      "target": "",
+      "classes": [],
+      "xfn": "",
+      "description": "",
+      "object_id": 1,
+      "object": "category",
+      "type": "taxonomy",
+      "type_label": "Category",
+      "children": []
+    }
+  ]
+}
+```
 
 ## Results Modifications
 To get a modified result, a "Client ID" must be registered via the `bridge_client_ids` hook:
