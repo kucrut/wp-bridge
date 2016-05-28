@@ -22,8 +22,6 @@ function bridge_load() {
 
 	$inc_dir = dirname( __FILE__ ) . '/includes';
 
-	require_once $inc_dir . '/extra.php';
-
 	require_once $inc_dir . '/post.php';
 	Bridge_Rest_Post_Modifier::init();
 

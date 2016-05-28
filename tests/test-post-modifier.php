@@ -75,6 +75,10 @@ class Bridge_Test_Post_Modifier extends Bridge_Test_Case {
 		);
 
 		foreach ( $this->post_terms as $key => $slug ) {
+			if ( ! array_key_exists( $key, $data ) ) {
+				continue;
+			}
+
 			$terms = $data[ $key ];
 
 			$this->assertArrayHasKey( $key, $data );

@@ -9,27 +9,8 @@ class Bridge_Test_Plugin extends Bridge_Test_Case {
 	 */
 	public function test_bridge_load() {
 		$this->assertTrue( class_exists( 'WP_REST_Controller' ) );
-
-		$this->assertEquals( 11, has_action( 'init', '_bridge_add_extra_api_taxonomy_arguments' ) );
-
 		$this->assertTrue( class_exists( 'Bridge_Rest_Post_Modifier' ) );
-
 		$this->assertTrue( class_exists( 'Bridge_Rest_Term_Modifier' ) );
-	}
-
-
-	/**
-	 * @covers ::_bridge_add_extra_api_taxonomy_arguments
-	 */
-	public function test_bridge_add_extra_api_taxonomy_arguments() {
-
-		// bootstrap the taxonomy variables
-		_bridge_add_extra_api_taxonomy_arguments();
-
-		$taxonomy = get_taxonomy( 'post_format' );
-		$this->assertTrue( $taxonomy->show_in_rest );
-		$this->assertEquals( 'formats', $taxonomy->rest_base );
-		$this->assertEquals( 'WP_REST_Terms_Controller', $taxonomy->rest_controller_class );
 	}
 
 

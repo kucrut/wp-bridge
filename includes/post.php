@@ -132,6 +132,10 @@ class Bridge_Rest_Post_Modifier {
 	 */
 	protected static function convert_term_ids_to_object( $data ) {
 		foreach ( self::$taxonomy_map as $key => $props ) {
+			if ( ! array_key_exists( $key, $data ) ) {
+				continue;
+			}
+
 			$home_url = home_url();
 			$term_ids = $data[ $key ];
 

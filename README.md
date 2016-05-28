@@ -1,27 +1,22 @@
 # Bridge
-Extra WordPress REST API Endpoints and Functionalities.
-
-This plugin was built to provide a bridge between WordPress and [Minnie](https://github.com/kucrut/minnie).
-It provides a few extra endpoints and modifies the results of some WP API requests.
+This plugin was built to provide a bridge between WordPress and [Minnie](https://github.com/kucrut/minnie). It modifies the results of some WP API requests.
 
 ## Requirements
 * WordPress 4.5
 * WP API 2.0-beta13
 
-## Endpoints
-
-### Post Formats
-Endpoint: `/wp-json/wp/v2/formats`
-Just like [categories](http://v2.wp-api.org/reference/categories/), but for post formats.
+## More bridges:
+* [Menus](https://github.com/kucrut/wp-bridge-menus)
+* [Post Formats](https://github.com/kucrut/wp-bridge-post-formats)
 
 ## Results Modifications
-To get a modified result, a "Client ID" must be registered via the `bridge_client_ids` hook:
+To get a modified result, a "Client ID" must be registered first:
 
 ```php
 /**
  * Register to the Bridge plugin
  *
- * @param   array $client_ids Client IDs.
+ * @param   array  $client_ids Client IDs.
  * @wp_hook filter bridge_client_ids
  * @return  array
  */
@@ -196,5 +191,8 @@ In additions to the modifications above, the result of requests to attachments/m
 ```
 
 ## Changelog
+### 0.2.0
+* Remove Menus & Post Formats (now as standalone plugins)
+
 ### 0.1.0
 * Initial

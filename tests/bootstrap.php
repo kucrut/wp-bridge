@@ -33,12 +33,6 @@ function _manually_load_plugin() {
 tests_add_filter( 'plugins_loaded', '_manually_load_plugin' );
 
 
-function _theme_setup() {
-	add_theme_support( 'post-formats', array( 'aside', 'image' ) );
-}
-tests_add_filter( 'after_setup_theme', '_theme_setup' );
-
-
 require_once $test_root . '/includes/bootstrap.php';
 require_once BRIDGE_TESTS_BRIDGE_DIR . '/tests/class-testcase.php';
 require_once BRIDGE_TESTS_WP_API_DIR . '/tests/class-wp-test-spy-rest-server.php';
