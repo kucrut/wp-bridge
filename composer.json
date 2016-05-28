@@ -1,0 +1,19 @@
+{
+    "name": "kucrut/bridge",
+    "description": "Additional REST API endpoints and functionalities",
+    "keywords": ["wordpress", "rest"],
+    "homepage": "https://github.com/kucrut/wp-bridge",
+    "license": "GPL-2.0",
+    "type": "wordpress-plugin",
+    "require": {
+      "composer/installers": "~1.0",
+      "wp-api/wp-api": ">=2.0-beta13.1"
+    },
+    "authors": [
+        {
+            "name": "Dzikri Aziz",
+            "email": "kvcrvt@gmail.com",
+            "homepage": "http://kucrut.org/"
+        }
+    ]
+}
