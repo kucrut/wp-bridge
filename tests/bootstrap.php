@@ -34,10 +34,6 @@ tests_add_filter( 'plugins_loaded', '_manually_load_plugin' );
 
 
 function _theme_setup() {
-	register_nav_menus( array(
-		'bridge' => 'Bridge Test',
-	) );
-
 	add_theme_support( 'post-formats', array( 'aside', 'image' ) );
 }
 tests_add_filter( 'after_setup_theme', '_theme_setup' );

@@ -24,29 +24,13 @@ function bridge_load() {
 
 	require_once $inc_dir . '/extra.php';
 
-	require_once $inc_dir . '/walker-nav-menu.php';
-	require_once $inc_dir . '/endpoints/menus.php';
-
 	require_once $inc_dir . '/post.php';
 	Bridge_Rest_Post_Modifier::init();
 
 	require_once $inc_dir . '/term.php';
 	Bridge_Rest_Term_Modifier::init();
-
-	add_action( 'rest_api_init', 'bridge_register_routes' );
 }
 add_action( 'plugins_loaded', 'bridge_load' );
-
-
-/**
- * Register our custom routes.
- *
- * @wp_action hook rest_api_init
- */
-function bridge_register_routes() {
-	$menu_items_controller = new Bridge_Menu_Items_Controller;
-	$menu_items_controller->register_routes();
-}
 
 
 /**
@@ -74,12 +58,14 @@ function bridge_should_filter_result( $request ) {
 }
 
 
-/**
- * Strip home URL from string
- *
- * @param  string $string Text.
- * @return string
- */
-function bridge_strip_home_url( $string ) {
-	return str_replace( home_url(), '', $string );
-}
+if ( ! function_exists( 'bridge_strip_home_url' ) ) :
+	/**
+	 * Strip home URL from string
+	 *
+	 * @param  string $string Text.
+	 * @return string
+	 */
+	function bridge_strip_home_url( $string ) {
+		return str_replace( home_url(), '', $string );
+	}
+endif;
