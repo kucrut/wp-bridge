@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Bridge
  * Description: Additional REST API endpoints and functionalities.
- * Version: 0.2.0
+ * Version: 0.2.1
  * Author: Dzikri Aziz
  * Author URI: http://kucrut.org
  * Plugin URI: https://github.com/kucrut/wp-bridge

@@ -191,6 +191,9 @@ In additions to the modifications above, the result of requests to attachments/m
 ```
 
 ## Changelog
+### 0.2.1
+* Add `lang` and `html_dir` to index's response
+
 ### 0.2.0
 * Remove Menus & Post Formats (now as standalone plugins)
 
