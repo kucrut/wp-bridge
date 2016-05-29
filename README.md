@@ -191,6 +191,9 @@ In additions to the modifications above, the result of requests to attachments/m
 ```
 
 ## Changelog
+### 0.3.0
+* Strip `home_url()` from menu items' url.
+
 ### 0.2.1
 * Add `lang` and `html_dir` to index's response
 
