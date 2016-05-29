@@ -24,6 +24,9 @@ function bridge_load() {
 
 	require_once $inc_dir . '/index.php';
 
+	require_once $inc_dir . '/menu.php';
+	Bridge_Rest_Mods_Menu::init();
+
 	require_once $inc_dir . '/post.php';
 	Bridge_Rest_Mods_Post::init();
 
