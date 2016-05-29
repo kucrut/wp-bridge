@@ -9,8 +9,8 @@ class Bridge_Test_Plugin extends Bridge_Test_Case {
 	 */
 	public function test_bridge_load() {
 		$this->assertTrue( class_exists( 'WP_REST_Controller' ) );
-		$this->assertTrue( class_exists( 'Bridge_Rest_Post_Modifier' ) );
-		$this->assertTrue( class_exists( 'Bridge_Rest_Term_Modifier' ) );
+		$this->assertTrue( class_exists( 'Bridge_Rest_Mods_Post' ) );
+		$this->assertTrue( class_exists( 'Bridge_Rest_Mods_Term' ) );
 	}
 
 

@@ -25,10 +25,10 @@ function bridge_load() {
 	require_once $inc_dir . '/index.php';
 
 	require_once $inc_dir . '/post.php';
-	Bridge_Rest_Post_Modifier::init();
+	Bridge_Rest_Mods_Post::init();
 
 	require_once $inc_dir . '/term.php';
-	Bridge_Rest_Term_Modifier::init();
+	Bridge_Rest_Mods_Term::init();
 }
 add_action( 'plugins_loaded', 'bridge_load' );
 

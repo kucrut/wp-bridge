@@ -4,7 +4,7 @@
  * Modify results of API Request to posts
  *
  */
-class Bridge_Rest_Post_Modifier {
+class Bridge_Rest_Mods_Post {
 
 	/**
 	 * Map of post types and their modifiers

@@ -1,6 +1,6 @@
 <?php
 
-class Bridge_Test_Post_Modifier extends Bridge_Test_Case {
+class Bridge_Test_Mods_Post extends Bridge_Test_Case {
 
 	/**
 	 * @var WP_Post

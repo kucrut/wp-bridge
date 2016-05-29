@@ -4,7 +4,7 @@
  * Modify results of API Request to terms
  *
  */
-class Bridge_Rest_Term_Modifier {
+class Bridge_Rest_Mods_Term {
 	/**
 	 * Register hook callbacks
 	 */
