@@ -26,12 +26,24 @@ function _manually_load_plugin() {
 	// WP API.
 	require_once BRIDGE_TESTS_WP_API_DIR . '/plugin.php';
 
+	// Bridge: Menus
+	$bridge_menus_file = BRIDGE_TESTS_PLUGINS_DIR . '/bridge-menus/plugin.php';
+	if ( file_exists( $bridge_menus_file ) ) {
+		require_once $bridge_menus_file;
+	}
+
 	// Bridge.
 	require_once BRIDGE_TESTS_BRIDGE_DIR . '/bridge.php';
 	bridge_load();
 }
 tests_add_filter( 'plugins_loaded', '_manually_load_plugin' );
 
+function _theme_setup() {
+	register_nav_menus( array(
+		'bridge' => 'Bridge Test',
+	) );
+}
+tests_add_filter( 'after_setup_theme', '_theme_setup' );
 
 require_once $test_root . '/includes/bootstrap.php';
 require_once BRIDGE_TESTS_BRIDGE_DIR . '/tests/class-testcase.php';
