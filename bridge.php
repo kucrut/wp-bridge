@@ -22,15 +22,15 @@ function bridge_load() {
 
 	$inc_dir = dirname( __FILE__ ) . '/includes';
 
-	require_once $inc_dir . '/index.php';
+	require_once $inc_dir . '/mods-index.php';
 
-	require_once $inc_dir . '/menu.php';
+	require_once $inc_dir . '/mods-menu.php';
 	Bridge_Rest_Mods_Menu::init();
 
-	require_once $inc_dir . '/post.php';
+	require_once $inc_dir . '/mods-post.php';
 	Bridge_Rest_Mods_Post::init();
 
-	require_once $inc_dir . '/term.php';
+	require_once $inc_dir . '/mods-term.php';
 	Bridge_Rest_Mods_Term::init();
 
 	require_once $inc_dir . '/mods-comments.php';
