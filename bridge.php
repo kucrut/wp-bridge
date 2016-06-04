@@ -32,6 +32,9 @@ function bridge_load() {
 
 	require_once $inc_dir . '/term.php';
 	Bridge_Rest_Mods_Term::init();
+
+	require_once $inc_dir . '/mods-comments.php';
+	Bridge_Rest_Mods_Comments::init();
 }
 add_action( 'plugins_loaded', 'bridge_load' );
 
