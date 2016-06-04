@@ -190,7 +190,101 @@ In additions to the modifications above, the result of requests to attachments/m
 }
 ```
 
+### Comments
+#### Original Result
+```json
+{
+  "id": 1,
+  "post": 1,
+  "parent": 0,
+  "author": 0,
+  "author_name": "Mr WordPress",
+  "author_url": "https://wordpress.org/",
+  "date": "2016-02-20T02:09:47",
+  "date_gmt": "2016-02-20T02:09:47",
+  "content": {
+    "rendered": "<p>Hi, this is a comment.<br />\nTo delete a comment, just log in and view the post&#039;s comments. There you will have the option to edit or delete them.</p>\n"
+  },
+  "link": "http://src.wordpress-develop.dev/blog/2016/02/20/hello-world/#comment-1",
+  "status": "approved",
+  "type": "comment",
+  "author_avatar_urls": {
+    "24": "http://1.gravatar.com/avatar/?s=24&d=mm&r=g",
+    "48": "http://1.gravatar.com/avatar/?s=48&d=mm&r=g",
+    "96": "http://2.gravatar.com/avatar/?s=96&d=mm&r=g"
+  },
+  "_links": {
+    "self": [
+      {
+        "href": "http://src.wordpress-develop.dev/wp-json/wp/v2/comments/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "http://src.wordpress-develop.dev/wp-json/wp/v2/comments"
+      }
+    ],
+    "up": [
+      {
+        "embeddable": true,
+        "post_type": "post",
+        "href": "http://src.wordpress-develop.dev/wp-json/wp/v2/posts/1"
+      }
+    ]
+  }
+}
+```
+
+#### Modified Result
+```json
+{
+  "id": 1,
+  "post": 1,
+  "parent": 0,
+  "author": 0,
+  "author_name": "Mr WordPress",
+  "author_url": "https://wordpress.org/",
+  "date": "2016-02-20T02:09:47",
+  "date_gmt": "2016-02-20T02:09:47",
+  "content": {
+    "rendered": "<p>Hi, this is a comment.<br />\nTo delete a comment, just log in and view the post&#039;s comments. There you will have the option to edit or delete them.</p>\n"
+  },
+  "link": "/blog/2016/02/20/hello-world/#comment-1",
+  "status": "approved",
+  "type": "comment",
+  "author_avatar_urls": {
+    "24": "http://2.gravatar.com/avatar/?s=24&d=mm&r=g",
+    "48": "http://1.gravatar.com/avatar/?s=48&d=mm&r=g",
+    "96": "http://0.gravatar.com/avatar/?s=96&d=mm&r=g"
+  },
+  "children_count": 0,
+  "date_formatted": "February 20, 2016 at 2:09 am",
+  "_links": {
+    "self": [
+      {
+        "href": "http://src.wordpress-develop.dev/wp-json/wp/v2/comments/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "http://src.wordpress-develop.dev/wp-json/wp/v2/comments"
+      }
+    ],
+    "up": [
+      {
+        "embeddable": true,
+        "post_type": "post",
+        "href": "http://src.wordpress-develop.dev/wp-json/wp/v2/posts/1"
+      }
+    ]
+  }
+}
+```
+
 ## Changelog
+### 0.4.0
+* Comments mods
+
 ### 0.3.0
 * Strip `home_url()` from menu items' url.
 
