@@ -28,6 +28,12 @@ class Bridge_Rest_Mods_Comments {
 		$data['children_count'] = self::get_children_count( $comment );
 		$data['date_formatted'] = self::get_formatted_date( $comment );
 
+		if ( home_url() === $data['author_url'] ) {
+			$data['author_url'] = '/';
+		} else {
+			$data['author_url'] = bridge_strip_home_url( $data['author_url'] );
+		}
+
 		$response->set_data( $data );
 
 		return $response;
