@@ -69,6 +69,7 @@ The result of requests to posts endpoints will have these modifications:
 * `title` gets a new item: `from_content`. It's generated from post content and is useful in case the post doesn't have a title and you still want to display a generated title on the client app.
 * `date_formatted` and `modified_formatted` are added, so you don't need to format the post dates in the client app.
 * The value of `categories`, `tags` and `formats` is converted to WP_Term objects.
+* When post preview is requested (by setting the `preview` parameter to `1`), the title and content will be replaced with the ones from the post's latest revision.
 
 #### Original Result
 ```json
@@ -282,6 +283,9 @@ In additions to the modifications above, the result of requests to attachments/m
 ```
 
 ## Changelog
+### 0.5.0
+* Live Preview
+
 ### 0.4.0
 * Comments mods
 
