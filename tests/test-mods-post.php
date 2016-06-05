@@ -89,6 +89,30 @@ class Bridge_Test_Mods_Post extends Bridge_Test_Case {
 	}
 
 
+	public function test_preview() {
+		$new_title = 'Post revised';
+		$new_content = 'Random content for post';
+		$rendered_content = apply_filters( 'the_content', $new_content );
+
+		wp_update_post( array(
+			'ID'           => $this->post->ID,
+			'post_title'   => $new_title,
+			'post_content' => $new_content,
+		));
+
+		$request = new WP_REST_Request( 'GET', '/wp/v2/posts/' . $this->post->ID );
+		$request->set_param( 'preview', 1 );
+		$request->set_header( 'X-Requested-With', $this->client_id );
+		$response = $this->server->dispatch( $request );
+
+		$data = $response->get_data();
+
+		$this->assertEquals( $new_title, $data['title']['raw'] );
+		$this->assertEquals( $new_content, $data['content']['raw'] );
+		$this->assertEquals( $rendered_content, $data['content']['rendered'] );
+	}
+
+
 	public function test_attachment() {
 		$request = new WP_REST_Request( 'GET', '/wp/v2/media/' . $this->attachment->ID );
 		$request->set_header( 'X-Requested-With', $this->client_id );
