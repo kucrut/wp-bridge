@@ -87,7 +87,63 @@ class Bridge_Rest_Mods_Post {
 
 
 	/**
+	 *  Check if the requested post is for previewing
+	 *
+	 *  @since  0.5.0
+	 *
+	 *  @param  WP_REST_Request  $request Request object.
+	 *  @return boolean
+	 */
+	protected static function is_preview_request( $request ) {
+		$is_preview = $request->get_param( 'preview' );
+
+		return ! empty( $is_preview );
+	}
+
+
+	/**
+	 *  Merge post data with its latest revision's
+	 *
+	 *  @since  0.5.0
+	 *
+	 *  @param  array  $data Post data.
+	 *  @return array
+	 */
+	protected static function merge_data_with_revision( $data ) {
+		$revisions = wp_get_post_revisions( $data['id'], array(
+			'posts_per_page' => 1,
+		) );
+
+		if ( empty( $revisions ) ) {
+			return $data;
+		}
+
+		$post = array_shift( $revisions );
+
+		// @codingStandardsIgnoreStart
+		$GLOBALS['post'] = $post;
+		// @codingStandardsIgnoreEnd
+
+		setup_postdata( $post );
+
+		$data['title'] = array(
+			'raw'      => $post->post_title,
+			'rendered' => get_the_title( $post->ID ),
+		);
+		$data['content'] = array(
+			'raw'      => $post->post_content,
+			'rendered' => apply_filters( 'the_content', $post->post_content ),
+		);
+
+		return $data;
+	}
+
+
+	/**
 	 * Modify post data
+	 *
+	 *  @since  0.1.0
+	 *  @since  0.5.0 Merge post data with its latest revision's
 	 *
 	 * @param WP_REST_Response   $response   The response object.
 	 * @param WP_Post            $post       Post object.
@@ -101,8 +157,11 @@ class Bridge_Rest_Mods_Post {
 		}
 
 		$data = $response->data;
-		$mods = self::$modifier_map[ $post->post_type ];
+		if ( self::is_preview_request( $request ) ) {
+			$data = self::merge_data_with_revision( $data );
+		}
 
+		$mods = self::$modifier_map[ $post->post_type ];
 		foreach ( $mods as $post_type => $callback ) {
 			$data = call_user_func( array( __CLASS__, $callback ), $data, $post );
 		}
