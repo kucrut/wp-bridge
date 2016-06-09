@@ -62,7 +62,9 @@ class Bridge_Rest_Mods_Comments {
 	 * @return int
 	 */
 	protected static function get_children_count( $comment ) {
-		$children = $comment->get_children();
+		$children = $comment->get_children( array(
+			'status' => 'approve',
+		));
 
 		return count( $children );
 	}
