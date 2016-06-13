@@ -25,6 +25,7 @@ class Bridge_Rest_Mods_Comments {
 		$data = $response->get_data();
 
 		$data['link'] = bridge_strip_home_url( $data['link'] );
+		$data['reply_link'] = self::get_reply_link( $comment );
 		$data['children_count'] = self::get_children_count( $comment );
 		$data['date_formatted'] = self::get_formatted_date( $comment );
 
@@ -67,5 +68,23 @@ class Bridge_Rest_Mods_Comments {
 		));
 
 		return count( $children );
+	}
+
+
+	/**
+	 *  Get comment reply link
+	 *
+	 *  @param  WP_Comment $comment Comment object.
+	 *  @return string
+	 */
+	protected static function get_reply_link( $comment ) {
+		$link = add_query_arg(
+			'replytocom',
+			$comment->comment_ID,
+			get_permalink( $comment->comment_post_ID )
+		);
+		$link .= '#respond';
+
+		return bridge_strip_home_url( $link );
 	}
 }

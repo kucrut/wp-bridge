@@ -36,6 +36,8 @@ class Bridge_Test_Mods_Comments extends Bridge_Test_Case {
 
 			$this->assertFalse( strpos( $comment['link'], home_url() ) );
 			$this->assertFalse( strpos( $comment['author_url'], home_url() ) );
+			$this->assertArrayHasKey( 'reply_link', $comment );
+			$this->assertFalse( strpos( $comment['reply_link'], home_url() ) );
 
 			$this->assertArrayHasKey( 'children_count', $comment );
 			if ( $comment['id'] === $parent_comment_id ) {
