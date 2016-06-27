@@ -53,7 +53,9 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function get_item( $request ) {
-		$data = array();
+		$data = array(
+			'name' => get_bloginfo( 'name' ),
+		);
 
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
@@ -75,12 +77,6 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 			'properties' => array(
 				'name' => array(
 					'description' => __( 'The name for the object.' ),
-					'type'        => 'string',
-					'context'     => array( 'view' ),
-					'readonly'    => true,
-				),
-				'description' => array(
-					'description' => __( 'The description for the resource.' ),
 					'type'        => 'string',
 					'context'     => array( 'view' ),
 					'readonly'    => true,
