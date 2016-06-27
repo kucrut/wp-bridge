@@ -56,6 +56,7 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 		$data = array(
 			'name'        => get_bloginfo( 'name' ),
 			'description' => get_bloginfo( 'description' ),
+			'lang'        => get_bloginfo( 'language' ),
 		);
 
 		// Wrap the data in a response object.
@@ -84,6 +85,12 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 				),
 				'description' => array(
 					'description' => __( 'The description for the resource.' ),
+					'type'        => 'string',
+					'context'     => array( 'view' ),
+					'readonly'    => true,
+				),
+				'lang' => array(
+					'description' => __( 'Site language.' ),
 					'type'        => 'string',
 					'context'     => array( 'view' ),
 					'readonly'    => true,
