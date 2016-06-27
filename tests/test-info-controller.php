@@ -45,8 +45,6 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 			if ( 'array' === $type ) {
 				$type = 'object';
 
-				#var_dump( $key );
-
 				$this->assertArrayHasKey( 'properties', $props );
 				$this->compare_schema_with_data( $props['properties'], $data[ $key ] );
 			}
