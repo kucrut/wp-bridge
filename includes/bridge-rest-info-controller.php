@@ -54,9 +54,11 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 	 */
 	public function get_item( $request ) {
 		$data = array(
+			'url'         => get_option( 'siteurl' ),
 			'name'        => get_bloginfo( 'name' ),
 			'description' => get_bloginfo( 'description' ),
 			'lang'        => get_bloginfo( 'language' ),
+			'html_dir'    => ( function_exists( 'is_rtl' ) && is_rtl() ) ? 'rtl' : 'ltr',
 		);
 
 		// Wrap the data in a response object.
@@ -77,6 +79,12 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 			'title'      => 'info',
 			'type'       => 'object',
 			'properties' => array(
+				'url' => array(
+					'description' => __( 'Site URL.' ),
+					'type'        => 'string',
+					'context'     => array( 'view' ),
+					'readonly'    => true,
+				),
 				'name' => array(
 					'description' => __( 'The name for the object.' ),
 					'type'        => 'string',
@@ -91,6 +99,12 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 				),
 				'lang' => array(
 					'description' => __( 'Site language.' ),
+					'type'        => 'string',
+					'context'     => array( 'view' ),
+					'readonly'    => true,
+				),
+				'html_dir' => array(
+					'description' => __( 'HTML direction.' ),
 					'type'        => 'string',
 					'context'     => array( 'view' ),
 					'readonly'    => true,

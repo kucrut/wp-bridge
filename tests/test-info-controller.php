@@ -47,14 +47,17 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 		$data       = $response->get_data();
 		$options    = $this->get_options();
 		$properties = $options['schema']['properties'];
+		$html_dir   = ( function_exists( 'is_rtl' ) && is_rtl() ) ? 'rtl' : 'ltr';
 
 		foreach ( $properties as $key => $props ) {
 			$this->assertArrayHasKey( $key, $data );
 			$this->assertEquals( $properties[ $key ]['type'], gettype( $data[ $key ] ) );
 		}
 
+		$this->assertEquals( get_option( 'siteurl' ), $data['url'] );
 		$this->assertEquals( get_bloginfo( 'name' ), $data['name'] );
 		$this->assertEquals( get_bloginfo( 'description' ), $data['description'] );
 		$this->assertEquals( get_bloginfo( 'language' ), $data['lang'] );
+		$this->assertEquals( $html_dir, $data['html_dir'] );
 	}
 }
