@@ -15,6 +15,17 @@ class Bridge_Test_Plugin extends Bridge_Test_Case {
 
 
 	/**
+	 * Make sure /bridge/v1/info controller is loaded
+	 *
+	 * @covers ::bridge_register_routes
+	 */
+	public function test_bridge_register_routes() {
+		$this->assertTrue( class_exists( 'Bridge_REST_Info_Controller' ) );
+		$this->assertEquals( 10, has_action( 'rest_api_init', 'bridge_register_routes' ) );
+	}
+
+
+	/**
 	 * @covers ::bridge_should_filter_result
 	 */
 	public function test_bridge_should_filter_result() {

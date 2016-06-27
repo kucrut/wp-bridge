@@ -40,6 +40,21 @@ add_action( 'plugins_loaded', 'bridge_load' );
 
 
 /**
+ * Register our custom routes.
+ *
+ * @wp_action hook rest_api_init
+ */
+function bridge_register_routes() {
+	# /bridge/v1/info Controller
+	require_once dirname( __FILE__ ) . '/includes/bridge-rest-info-controller.php';
+
+	$info_controller = new Bridge_REST_Info_Controller;
+	$info_controller->register_routes();
+}
+add_action( 'rest_api_init', 'bridge_register_routes' );
+
+
+/**
  * Check if we need to filter the result of API request.
  *
  * Only requests came from listed clients will be filtered.
