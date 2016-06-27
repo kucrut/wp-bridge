@@ -60,6 +60,11 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 			'description' => get_option( 'blogdescription' ),
 			'lang'        => get_bloginfo( 'language' ),
 			'html_dir'    => ( function_exists( 'is_rtl' ) && is_rtl() ) ? 'rtl' : 'ltr',
+			'settings'    => array(
+				'comments' => array(
+					'per_page' => absint( get_option( 'comments_per_page' ) ),
+				),
+			),
 		);
 
 		// Wrap the data in a response object.
@@ -115,6 +120,28 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 					'type'        => 'string',
 					'context'     => array( 'view' ),
 					'readonly'    => true,
+				),
+				'settings' => array(
+					'description' => __( 'Site settings.' ),
+					'type'        => 'object',
+					'context'     => array( 'view' ),
+					'readonly'    => true,
+					'properties'  => array(
+						'comments' => array(
+							'description' => __( 'Comments settings.' ),
+							'type'        => 'object',
+							'context'     => array( 'view' ),
+							'readonly'    => true,
+							'properties'  => array(
+								'per_page' => array(
+									'description' => __( 'Comments per page.' ),
+									'type'        => 'integer',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								),
+							),
+						),
+					),
 				),
 			),
 		);

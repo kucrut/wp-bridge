@@ -36,6 +36,26 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 	}
 
 
+	protected function compare_schema_with_data( $properties, $data ) {
+		foreach ( $properties as $key => $props ) {
+			$this->assertArrayHasKey( $key, $data );
+
+			$type = gettype( $data[ $key ] );
+
+			if ( 'array' === $type ) {
+				$type = 'object';
+
+				#var_dump( $key );
+
+				$this->assertArrayHasKey( 'properties', $props );
+				$this->compare_schema_with_data( $props['properties'], $data[ $key ] );
+			}
+
+			$this->assertEquals( $properties[ $key ]['type'], $type );
+		}
+	}
+
+
 	/**
 	 *  Make sure the route returns the correct data
 	 *
@@ -49,10 +69,7 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 		$properties = $options['schema']['properties'];
 		$html_dir   = ( function_exists( 'is_rtl' ) && is_rtl() ) ? 'rtl' : 'ltr';
 
-		foreach ( $properties as $key => $props ) {
-			$this->assertArrayHasKey( $key, $data );
-			$this->assertEquals( $properties[ $key ]['type'], gettype( $data[ $key ] ) );
-		}
+		$this->compare_schema_with_data( $properties, $data );
 
 		$this->assertEquals( get_option( 'siteurl' ), $data['url'] );
 		$this->assertEquals( home_url(), $data['home'] );
