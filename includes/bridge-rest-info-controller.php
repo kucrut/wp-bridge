@@ -62,8 +62,9 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 			'html_dir'    => ( function_exists( 'is_rtl' ) && is_rtl() ) ? 'rtl' : 'ltr',
 			'settings'    => array(
 				'comments' => array(
-					'per_page' => absint( get_option( 'comments_per_page' ) ),
-					'threads'  => (bool) get_option( 'thread_comments' ),
+					'per_page'      => absint( get_option( 'comments_per_page' ) ),
+					'threads'       => (bool) get_option( 'thread_comments' ),
+					'threads_depth' => absint( get_option( 'thread_comments_depth' ) ),
 				),
 			),
 		);
@@ -143,6 +144,12 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 								'threads' => array(
 									'description' => __( 'Whether or not threaded comments is enabled.' ),
 									'type'        => 'boolean',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								),
+								'threads_depth' => array(
+									'description' => __( 'Comments threads depth.' ),
+									'type'        => 'integer',
 									'context'     => array( 'view' ),
 									'readonly'    => true,
 								),
