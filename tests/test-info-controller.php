@@ -81,5 +81,7 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 		$this->assertArrayHasKey( 'comments', $data['settings'] );
 		$this->assertArrayHasKey( 'per_page', $data['settings']['comments'] );
 		$this->assertEquals( absint( get_option( 'comments_per_page' ) ), $data['settings']['comments']['per_page'] );
+		$this->assertArrayHasKey( 'threads', $data['settings']['comments'] );
+		$this->assertEquals( (bool) get_option( 'thread_comments' ), $data['settings']['comments']['threads'] );
 	}
 }

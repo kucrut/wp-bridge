@@ -63,6 +63,7 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 			'settings'    => array(
 				'comments' => array(
 					'per_page' => absint( get_option( 'comments_per_page' ) ),
+					'threads'  => (bool) get_option( 'thread_comments' ),
 				),
 			),
 		);
@@ -136,6 +137,12 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 								'per_page' => array(
 									'description' => __( 'Comments per page.' ),
 									'type'        => 'integer',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								),
+								'threads' => array(
+									'description' => __( 'Whether or not threaded comments is enabled.' ),
+									'type'        => 'boolean',
 									'context'     => array( 'view' ),
 									'readonly'    => true,
 								),
