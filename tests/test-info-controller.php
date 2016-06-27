@@ -56,8 +56,8 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 
 		$this->assertEquals( get_option( 'siteurl' ), $data['url'] );
 		$this->assertEquals( home_url(), $data['home'] );
-		$this->assertEquals( get_bloginfo( 'name' ), $data['name'] );
-		$this->assertEquals( get_bloginfo( 'description' ), $data['description'] );
+		$this->assertEquals( get_option( 'blogname' ), $data['name'] );
+		$this->assertEquals( get_option( 'blogdescription' ), $data['description'] );
 		$this->assertEquals( get_bloginfo( 'language' ), $data['lang'] );
 		$this->assertEquals( $html_dir, $data['html_dir'] );
 	}

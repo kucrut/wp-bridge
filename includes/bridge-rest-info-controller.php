@@ -56,8 +56,8 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 		$data = array(
 			'url'         => get_option( 'siteurl' ),
 			'home'        => home_url(),
-			'name'        => get_bloginfo( 'name' ),
-			'description' => get_bloginfo( 'description' ),
+			'name'        => get_option( 'blogname' ),
+			'description' => get_option( 'blogdescription' ),
 			'lang'        => get_bloginfo( 'language' ),
 			'html_dir'    => ( function_exists( 'is_rtl' ) && is_rtl() ) ? 'rtl' : 'ltr',
 		);
