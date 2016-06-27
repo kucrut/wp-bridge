@@ -55,6 +55,7 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 	public function get_item( $request ) {
 		$data = array(
 			'url'         => get_option( 'siteurl' ),
+			'home'        => home_url(),
 			'name'        => get_bloginfo( 'name' ),
 			'description' => get_bloginfo( 'description' ),
 			'lang'        => get_bloginfo( 'language' ),
@@ -81,6 +82,12 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 			'properties' => array(
 				'url' => array(
 					'description' => __( 'Site URL.' ),
+					'type'        => 'string',
+					'context'     => array( 'view' ),
+					'readonly'    => true,
+				),
+				'home' => array(
+					'description' => __( 'Home URL.' ),
 					'type'        => 'string',
 					'context'     => array( 'view' ),
 					'readonly'    => true,
