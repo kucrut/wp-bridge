@@ -54,7 +54,8 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 	 */
 	public function get_item( $request ) {
 		$data = array(
-			'name' => get_bloginfo( 'name' ),
+			'name'        => get_bloginfo( 'name' ),
+			'description' => get_bloginfo( 'description' ),
 		);
 
 		// Wrap the data in a response object.
@@ -77,6 +78,12 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 			'properties' => array(
 				'name' => array(
 					'description' => __( 'The name for the object.' ),
+					'type'        => 'string',
+					'context'     => array( 'view' ),
+					'readonly'    => true,
+				),
+				'description' => array(
+					'description' => __( 'The description for the resource.' ),
 					'type'        => 'string',
 					'context'     => array( 'view' ),
 					'readonly'    => true,

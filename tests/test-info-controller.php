@@ -54,5 +54,6 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 		}
 
 		$this->assertEquals( get_bloginfo( 'name' ), $data['name'] );
+		$this->assertEquals( get_bloginfo( 'description' ), $data['description'] );
 	}
 }
