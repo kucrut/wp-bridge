@@ -94,4 +94,29 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 		$this->assertArrayHasKey( 'threads_depth', $data['settings']['comments'] );
 		$this->assertEquals( absint( get_option( 'thread_comments_depth' ) ), $data['settings']['comments']['threads_depth'] );
 	}
+
+
+	/**
+	 *  Make sure the response can be filtered
+	 */
+	public function test_get_item_filtered() {
+		add_filter( 'bridge_rest_info', function( $response ) {
+			$data = $response->get_data();
+
+			$data['name']     = 'Random Site Name';
+			$data['some_key'] = 'some_value';
+
+			$response->set_data( $data );
+
+			return $response;
+		});
+
+		$request  = new WP_REST_Request( 'GET', '/bridge/v1/info' );
+		$response = $this->server->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertArrayHasKey( 'some_key', $data );
+		$this->assertEquals( 'some_value', $data['some_key'] );
+		$this->assertEquals( 'Random Site Name', $data['name'] );
+	}
 }

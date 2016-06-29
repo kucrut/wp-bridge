@@ -75,7 +75,12 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
 
-		return $response;
+		/**
+		 *  Filter the /info data
+		 *
+		 * @param WP_REST_Response $response Response data.
+		 */
+		return apply_filters( 'bridge_rest_info', $response );
 	}
 
 
