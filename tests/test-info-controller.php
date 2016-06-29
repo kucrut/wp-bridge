@@ -69,13 +69,23 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 
 		$this->compare_schema_with_data( $properties, $data );
 
+		// General.
 		$this->assertEquals( get_option( 'siteurl' ), $data['url'] );
 		$this->assertEquals( home_url(), $data['home'] );
 		$this->assertEquals( get_option( 'blogname' ), $data['name'] );
 		$this->assertEquals( get_option( 'blogdescription' ), $data['description'] );
 		$this->assertEquals( get_bloginfo( 'language' ), $data['lang'] );
 		$this->assertEquals( $html_dir, $data['html_dir'] );
+
+		// Settings.
 		$this->assertArrayHasKey( 'settings', $data );
+
+		// Archive settings.
+		$this->assertArrayHasKey( 'archive', $data['settings'] );
+		$this->assertArrayHasKey( 'per_page', $data['settings']['archive'] );
+		$this->assertEquals( absint( get_option( 'posts_per_page' ) ), $data['settings']['archive']['per_page'] );
+
+		// Comments settings.
 		$this->assertArrayHasKey( 'comments', $data['settings'] );
 		$this->assertArrayHasKey( 'per_page', $data['settings']['comments'] );
 		$this->assertEquals( absint( get_option( 'comments_per_page' ) ), $data['settings']['comments']['per_page'] );
