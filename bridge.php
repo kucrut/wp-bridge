@@ -5,7 +5,7 @@
  * Description: Additional REST API endpoints and functionalities.
  * Version: 0.6.0
  * Author: Dzikri Aziz
- * Author URI: http://kucrut.org
+ * Author URI: https://kucrut.org
  * Plugin URI: https://github.com/kucrut/wp-bridge
  * License: GPLv2
  */
