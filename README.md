@@ -9,6 +9,32 @@ This plugin was built to provide a bridge between WordPress and [Minnie](https:/
 * [Menus](https://github.com/kucrut/wp-bridge-menus)
 * [Post Formats](https://github.com/kucrut/wp-bridge-post-formats)
 
+## Endpoints
+
+### Info
+Endpoint: `/wp-json/bridge/v1/info`
+
+```json
+{
+  "url": "https://kucrut.org/wp",
+  "home": "https://kucrut.org",
+  "name": "Dzikri Aziz",
+  "description": "WordPress Developer, Traveler.",
+  "lang": "en-US",
+  "html_dir": "ltr",
+  "settings": {
+    "archive": {
+      "per_page": 11
+    },
+    "comments": {
+      "per_page": 50,
+      "threads": true,
+      "threads_depth": 3
+    }
+  }
+}
+```
+
 ## Results Modifications
 To get a modified result, a "Client ID" must be registered first:
 
