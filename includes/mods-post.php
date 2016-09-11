@@ -24,23 +24,6 @@ class Bridge_Rest_Mods_Post {
 		),
 	);
 
-	/**
-	 * Map of taxonomy endpoints
-	 *
-	 * @var array
-	 */
-	protected static $taxonomy_map = array(
-		'tags' => array(
-			'taxonomy' => 'post_tag',
-		),
-		'categories' => array(
-			'taxonomy' => 'category',
-		),
-		'formats' => array(
-			'taxonomy' => 'post_format',
-		),
-	);
-
 
 	/**
 	 * Register hook callbacks
@@ -184,13 +167,47 @@ class Bridge_Rest_Mods_Post {
 
 
 	/**
-	 * Convert term IDs to objects
+	 * Get object taxonomy maps
+	 *
+	 * @since 0.6.1
+	 * @param string $object_type Object type. Default 'post'.
+	 *
+	 * @return array
+	 */
+	protected static function get_taxonomy_map( $object_type = 'post' ) {
+		$taxonomy_map    = array();
+		$post_taxonomies = get_object_taxonomies( $object_type, 'objects' );
+
+		if ( empty( $post_taxonomies ) ) {
+			return $taxonomy_map;
+		}
+
+		foreach ( $post_taxonomies as $tax ) {
+			if ( $tax->public && ! empty( $tax->show_in_rest ) ) {
+				$taxonomy_map[ $tax->rest_base ] = array( 'taxonomy' => $tax->name );
+			}
+		}
+
+		/**
+		 * Filters taxonomies map
+		 *
+		 * @since 0.6.1
+		 * @param array $map Taxonomy map.
+		 */
+		$taxonomy_map = apply_filters( 'bridge_post_taxonomies_map', $taxonomy_map );
+
+		return $taxonomy_map;
+	}
+
+
+	/**
+	 * Convert post term IDs to objects
 	 *
 	 * @param  array $data Result data.
 	 * @return array
 	 */
 	protected static function convert_term_ids_to_object( $data ) {
-		foreach ( self::$taxonomy_map as $key => $props ) {
+		foreach ( self::get_taxonomy_map( $data['type'] ) as $key => $props ) {
 			if ( ! array_key_exists( $key, $data ) ) {
 				continue;
 			}
