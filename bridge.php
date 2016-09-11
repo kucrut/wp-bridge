@@ -36,7 +36,7 @@ function bridge_load() {
 	require_once $inc_dir . '/mods-comments.php';
 	Bridge_Rest_Mods_Comments::init();
 }
-add_action( 'plugins_loaded', 'bridge_load' );
+add_action( 'wp_loaded', 'bridge_load' );
 
 
 /**
