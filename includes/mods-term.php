@@ -33,6 +33,10 @@ class Bridge_Rest_Mods_Term {
 
 		$data['link'] = bridge_strip_home_url( $data['link'] );
 
+		if ( ! empty( $data['description'] ) ) {
+			$data['description'] = wp_kses_post( wpautop( $data['description'] ) );
+		}
+
 		$response->set_data( $data );
 
 		return $response;
