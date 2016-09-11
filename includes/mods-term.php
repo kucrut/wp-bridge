@@ -9,7 +9,9 @@ class Bridge_Rest_Mods_Term {
 	 * Register hook callbacks
 	 */
 	public static function init() {
-		add_filter( 'rest_prepare_post_format', array( __CLASS__, 'modify_term_data' ), 10, 3 );
+		foreach ( get_taxonomies( array( 'show_in_rest' => true ) ) as $taxonomy ) {
+			add_filter( "rest_prepare_${taxonomy}", array( __CLASS__, 'modify_term_data' ), 10, 3 );
+		}
 	}
 
 
