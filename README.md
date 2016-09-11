@@ -309,6 +309,9 @@ In additions to the modifications above, the result of requests to attachments/m
 ```
 
 ## Changelog
+### 0.7.0
+* Support custom taxonomies
+
 ### 0.6.0
 * Add `/info` endpoint
 
