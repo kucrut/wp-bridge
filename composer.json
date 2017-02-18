@@ -6,8 +6,7 @@
     "license": "GPL-2.0",
     "type": "wordpress-plugin",
     "require": {
-      "composer/installers": "~1.0",
-      "wp-api/wp-api": ">=2.0-beta13.1"
+      "composer/installers": "~1.0"
     },
     "authors": [
         {
