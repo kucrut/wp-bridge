@@ -45,6 +45,45 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 		return true;
 	}
 
+	/**
+	 * Get blog page data
+	 *
+	 * @since 0.9.0
+	 *
+	 * @return array|null
+	 */
+	protected function get_blog_page(): ?array {
+		$page_id = absint( get_option( 'page_for_posts' ) );
+
+		if ( empty( $page_id ) ) {
+			return null;
+		}
+
+		return [
+			'id'  => $page_id,
+			'url' => get_permalink( $page_id ),
+		];
+	}
+
+	/**
+	 * Get front page data
+	 *
+	 * @since 0.9.0
+	 *
+	 * @return array|null
+	 */
+	protected function get_front_page(): ?array {
+		$page_id = absint( get_option( 'page_on_front' ) );
+
+		if ( empty( $page_id ) ) {
+			return null;
+		}
+
+		return [
+			'id'  => $page_id,
+			'url' => home_url(),
+		];
+	}
 
 	/**
 	 * Get site info
@@ -69,6 +108,8 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 					'threads'       => (bool) get_option( 'thread_comments' ),
 					'threads_depth' => absint( get_option( 'thread_comments_depth' ) ),
 				),
+				'blog_page'  => $this->get_blog_page(),
+				'front_page' => $this->get_front_page(),
 			),
 		);
 
@@ -177,6 +218,46 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 								),
 							),
 						),
+						'blog_page' => [
+							'description' => __( 'Blog page.' ),
+							'type'        => 'object',
+							'context'     => [ 'view' ],
+							'readonly'    => true,
+							'properties'  => [
+								'id' => [
+									'description' => __( 'Blog page ID.', 'bridge' ),
+									'type'        => 'integer',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								],
+								'url' => [
+									'description' => __( 'Blog page URL.', 'bridge' ),
+									'type'        => 'string',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								],
+							],
+						],
+						'front_page' => [
+							'description' => __( 'Front page.' ),
+							'type'        => 'object',
+							'context'     => [ 'view' ],
+							'readonly'    => true,
+							'properties'  => [
+								'id' => [
+									'description' => __( 'Front page ID.', 'bridge' ),
+									'type'        => 'integer',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								],
+								'url' => [
+									'description' => __( 'Front page URL.', 'bridge' ),
+									'type'        => 'string',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								],
+							],
+						],
 					),
 				),
 			),
