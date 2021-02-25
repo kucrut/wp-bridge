@@ -8,7 +8,12 @@
 		<!-- Altis uses PHP 7.2 or later, disregard PHP 7.1 warnings around "object" type. -->
 		<exclude name="PHPCompatibility.FunctionDeclarations.NewParamTypeDeclarations.objectFound" />
 		<exclude name="PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.objectFound" />
+		<exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace" />
 		<exclude name="PSR1.Files.SideEffects.FoundWithSymbols" />
+		<exclude name="Generic.Commenting" />
+		<exclude name="Squiz.Commenting" />
+		<exclude name="HM.Functions.NamespacedFunctions.MissingNamespace" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 	</rule>
 
 	<arg name="extensions" value="php" />
