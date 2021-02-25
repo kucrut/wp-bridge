@@ -151,7 +151,7 @@ class Bridge_Rest_Mods_Post {
 		if ( 'attachment' !== $post->post_type ) {
 			$data['content']['rendered'] = bridge_strip_home_url( $data['content']['rendered'] );
 			$data['excerpt']['rendered'] = bridge_strip_home_url( $data['excerpt']['rendered'] );
-			$data['title']['from_content'] = substr( strip_tags( $data['content']['rendered'] ), 0, 44 ) . '…';
+			$data['title']['from_content'] = substr( wp_strip_all_tags( $data['content']['rendered'] ), 0, 44 ) . '…';
 		}
 
 		$response->set_data( $data );
