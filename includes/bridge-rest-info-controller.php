@@ -46,6 +46,26 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 	}
 
 	/**
+	 * Get blog page data
+	 *
+	 * @since 0.9.0
+	 *
+	 * @return array|null
+	 */
+	protected function get_blog_page(): ?array {
+		$page_id = absint( get_option( 'page_for_posts' ) );
+
+		if ( empty( $page_id ) ) {
+			return null;
+		}
+
+		return [
+			'id'  => $page_id,
+			'url' => get_permalink( $page_id ),
+		];
+	}
+
+	/**
 	 * Get front page data
 	 *
 	 * @since 0.9.0
@@ -88,6 +108,7 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 					'threads'       => (bool) get_option( 'thread_comments' ),
 					'threads_depth' => absint( get_option( 'thread_comments_depth' ) ),
 				),
+				'blog_page'  => $this->get_blog_page(),
 				'front_page' => $this->get_front_page(),
 			),
 		);
