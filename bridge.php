@@ -38,21 +38,19 @@ function bridge_load() {
 }
 add_action( 'wp_loaded', 'bridge_load' );
 
-
 /**
  * Register our custom routes.
  *
  * @wp_action hook rest_api_init
  */
 function bridge_register_routes() {
-	# /bridge/v1/info Controller
+	// /bridge/v1/info Controller
 	require_once dirname( __FILE__ ) . '/includes/bridge-rest-info-controller.php';
 
 	$info_controller = new Bridge_REST_Info_Controller;
 	$info_controller->register_routes();
 }
 add_action( 'rest_api_init', 'bridge_register_routes' );
-
 
 /**
  * Check if we need to filter the result of API request.
@@ -68,7 +66,7 @@ function bridge_should_filter_result( $request ) {
 		return false;
 	}
 
-	$client_ids = array_filter( (array) apply_filters( 'bridge_client_ids', array() ) );
+	$client_ids = array_filter( (array) apply_filters( 'bridge_client_ids', [] ) );
 	if ( empty( $client_ids ) ) {
 		return false;
 	}
@@ -77,7 +75,6 @@ function bridge_should_filter_result( $request ) {
 
 	return ( ! empty( $clients_found ) );
 }
-
 
 if ( ! function_exists( 'bridge_strip_home_url' ) ) :
 	/**

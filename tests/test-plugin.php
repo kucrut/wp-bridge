@@ -13,7 +13,6 @@ class Bridge_Test_Plugin extends Bridge_Test_Case {
 		$this->assertTrue( class_exists( 'Bridge_Rest_Mods_Term' ) );
 	}
 
-
 	/**
 	 * Make sure /bridge/v1/info controller is loaded
 	 *
@@ -23,7 +22,6 @@ class Bridge_Test_Plugin extends Bridge_Test_Case {
 		$this->assertTrue( class_exists( 'Bridge_REST_Info_Controller' ) );
 		$this->assertEquals( 10, has_action( 'rest_api_init', 'bridge_register_routes' ) );
 	}
-
 
 	/**
 	 * @covers ::bridge_should_filter_result
@@ -36,7 +34,6 @@ class Bridge_Test_Plugin extends Bridge_Test_Case {
 		$request->set_header( 'X-Requested-With', $this->client_id );
 		$this->assertTrue( bridge_should_filter_result( $request ) );
 	}
-
 
 	/**
 	 * @covers ::bridge_strip_home_url

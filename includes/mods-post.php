@@ -2,7 +2,6 @@
 
 /**
  * Modify results of API Request to posts
- *
  */
 class Bridge_Rest_Mods_Post {
 
@@ -11,29 +10,27 @@ class Bridge_Rest_Mods_Post {
 	 *
 	 * @var array
 	 */
-	protected static $modifier_map = array(
-		'page' => array(
+	protected static $modifier_map = [
+		'page' => [
 			'cleanup_content',
-		),
-		'post' => array(
+		],
+		'post' => [
 			'cleanup_content',
 			'convert_term_ids_to_object',
-		),
-		'attachment' => array(
+		],
+		'attachment' => [
 			'add_attachment_parent',
-		),
-	);
-
+		],
+	];
 
 	/**
 	 * Register hook callbacks
 	 */
 	public static function init() {
-		add_filter( 'rest_prepare_page', array( __CLASS__, 'modify_post_data' ), 10, 3 );
-		add_filter( 'rest_prepare_post', array( __CLASS__, 'modify_post_data' ), 10, 3 );
-		add_filter( 'rest_prepare_attachment', array( __CLASS__, 'modify_post_data' ), 10, 3 );
+		add_filter( 'rest_prepare_page', [ __CLASS__, 'modify_post_data' ], 10, 3 );
+		add_filter( 'rest_prepare_post', [ __CLASS__, 'modify_post_data' ], 10, 3 );
+		add_filter( 'rest_prepare_attachment', [ __CLASS__, 'modify_post_data' ], 10, 3 );
 	}
-
 
 	/**
 	 * Clean up
@@ -54,7 +51,7 @@ class Bridge_Rest_Mods_Post {
 			return $data;
 		}
 
-		$script_sources = array();
+		$script_sources = [];
 		foreach ( $script_tags as $script_tag ) {
 			preg_match( $src_pattern, $script_tag, $src );
 			if ( ! empty( $src ) ) {
@@ -67,7 +64,6 @@ class Bridge_Rest_Mods_Post {
 
 		return $data;
 	}
-
 
 	/**
 	 *  Check if the requested post is for previewing
@@ -83,7 +79,6 @@ class Bridge_Rest_Mods_Post {
 		return ! empty( $is_preview );
 	}
 
-
 	/**
 	 *  Merge post data with its latest revision's
 	 *
@@ -93,9 +88,9 @@ class Bridge_Rest_Mods_Post {
 	 *  @return array
 	 */
 	protected static function merge_data_with_revision( $data ) {
-		$revisions = wp_get_post_revisions( $data['id'], array(
+		$revisions = wp_get_post_revisions( $data['id'], [
 			'posts_per_page' => 1,
-		) );
+		] );
 
 		if ( empty( $revisions ) ) {
 			return $data;
@@ -109,18 +104,17 @@ class Bridge_Rest_Mods_Post {
 
 		setup_postdata( $post );
 
-		$data['title'] = array(
+		$data['title'] = [
 			'raw'      => $post->post_title,
 			'rendered' => get_the_title( $post->ID ),
-		);
-		$data['content'] = array(
+		];
+		$data['content'] = [
 			'raw'      => $post->post_content,
 			'rendered' => apply_filters( 'the_content', $post->post_content ),
-		);
+		];
 
 		return $data;
 	}
-
 
 	/**
 	 * Modify post data
@@ -146,7 +140,7 @@ class Bridge_Rest_Mods_Post {
 
 		$mods = self::$modifier_map[ $post->post_type ];
 		foreach ( $mods as $post_type => $callback ) {
-			$data = call_user_func( array( __CLASS__, $callback ), $data, $post );
+			$data = call_user_func( [ __CLASS__, $callback ], $data, $post );
 		}
 
 		// Common
@@ -165,7 +159,6 @@ class Bridge_Rest_Mods_Post {
 		return $response;
 	}
 
-
 	/**
 	 * Get object taxonomy maps
 	 *
@@ -175,7 +168,7 @@ class Bridge_Rest_Mods_Post {
 	 * @return array
 	 */
 	protected static function get_taxonomy_map( $object_type = 'post' ) {
-		$taxonomy_map    = array();
+		$taxonomy_map    = [];
 		$post_taxonomies = get_object_taxonomies( $object_type, 'objects' );
 
 		if ( empty( $post_taxonomies ) ) {
@@ -184,7 +177,7 @@ class Bridge_Rest_Mods_Post {
 
 		foreach ( $post_taxonomies as $tax ) {
 			if ( $tax->public && ! empty( $tax->show_in_rest ) ) {
-				$taxonomy_map[ $tax->rest_base ] = array( 'taxonomy' => $tax->name );
+				$taxonomy_map[ $tax->rest_base ] = [ 'taxonomy' => $tax->name ];
 			}
 		}
 
@@ -198,7 +191,6 @@ class Bridge_Rest_Mods_Post {
 
 		return $taxonomy_map;
 	}
-
 
 	/**
 	 * Convert post term IDs to objects
@@ -220,24 +212,24 @@ class Bridge_Rest_Mods_Post {
 			}
 
 			$taxonomy = $props['taxonomy'];
-			$_terms   = get_terms( array(
+			$_terms   = get_terms( [
 				'taxonomy' => $taxonomy,
 				'include'  => $term_ids,
-			));
+			]);
 
 			if ( empty( $_terms ) || is_wp_error( $_terms ) ) {
 				continue;
 			}
 
-			$terms = array();
+			$terms = [];
 			foreach ( $_terms as $_term ) {
-				$term = array(
+				$term = [
 					'id'          => $_term->term_id,
 					'name'        => $_term->name,
 					'slug'        => $_term->slug,
 					'description' => $_term->description,
 					'link'        => bridge_strip_home_url( get_term_link( $_term, $taxonomy ) ),
-				);
+				];
 
 				$terms[] = $term;
 			}
@@ -247,7 +239,6 @@ class Bridge_Rest_Mods_Post {
 
 		return $data;
 	}
-
 
 	/**
 	 * Add parent post to attachment data
@@ -262,13 +253,13 @@ class Bridge_Rest_Mods_Post {
 			return $data;
 		}
 
-		$data['parent_post'] = array(
+		$data['parent_post'] = [
 			'id'    => $parent->ID,
 			'link'  => bridge_strip_home_url( get_permalink( $parent ) ),
-			'title' => array(
+			'title' => [
 				'rendered' => get_the_title( $parent ),
-			),
-		);
+			],
+		];
 
 		return $data;
 	}

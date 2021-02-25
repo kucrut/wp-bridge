@@ -3,9 +3,8 @@
 class Bridge_Rest_Mods_Menu {
 
 	public static function init() {
-		add_filter( 'bridge_rest_prepare_menu', array( __CLASS__, 'modify_menu_data' ), 10, 3 );
+		add_filter( 'bridge_rest_prepare_menu', [ __CLASS__, 'modify_menu_data' ], 10, 3 );
 	}
-
 
 	/**
 	 * Strip home_url() from menu item data
@@ -14,9 +13,8 @@ class Bridge_Rest_Mods_Menu {
 	 */
 	protected static function strip_home_url( &$item ) {
 		$item['url'] = bridge_strip_home_url( $item['url'] );
-		array_walk( $item['children'], array( __CLASS__, __METHOD__ ) );
+		array_walk( $item['children'], [ __CLASS__, __METHOD__ ] );
 	}
-
 
 	/**
 	 * Modify menu data
@@ -33,7 +31,7 @@ class Bridge_Rest_Mods_Menu {
 		}
 
 		$data = $response->data;
-		array_walk( $data['items'], array( __CLASS__, 'strip_home_url' ) );
+		array_walk( $data['items'], [ __CLASS__, 'strip_home_url' ] );
 
 		$response->set_data( $data );
 

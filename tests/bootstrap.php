@@ -9,9 +9,9 @@
 // 3. Tests checked out to /tmp
 if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
 	$test_root = getenv( 'WP_DEVELOP_DIR' );
-} else if ( file_exists( '../../../../tests/phpunit/includes/bootstrap.php' ) ) {
+} elseif ( file_exists( '../../../../tests/phpunit/includes/bootstrap.php' ) ) {
 	$test_root = '../../../../tests/phpunit';
-} else if ( file_exists( '/tmp/wordpress-tests-lib/includes/bootstrap.php' ) ) {
+} elseif ( file_exists( '/tmp/wordpress-tests-lib/includes/bootstrap.php' ) ) {
 	$test_root = '/tmp/wordpress-tests-lib';
 }
 
@@ -39,9 +39,9 @@ function _manually_load_plugin() {
 tests_add_filter( 'plugins_loaded', '_manually_load_plugin' );
 
 function _theme_setup() {
-	register_nav_menus( array(
+	register_nav_menus( [
 		'bridge' => 'Bridge Test',
-	) );
+	] );
 }
 tests_add_filter( 'after_setup_theme', '_theme_setup' );
 
