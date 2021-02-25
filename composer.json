@@ -14,5 +14,8 @@
             "email": "dzikri.aziz@gmail.com",
             "homepage": "https://kucrut.org"
         }
-    ]
+    ],
+    "require-dev": {
+        "humanmade/coding-standards": "^1.1"
+    }
 }
