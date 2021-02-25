@@ -73,7 +73,7 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 	 * @return array|null
 	 */
 	protected function get_front_page(): ?array {
-		$page_id = get_option( 'page_on_front' );
+		$page_id = absint( get_option( 'page_on_front' ) );
 
 		if ( empty( $page_id ) ) {
 			return null;
