@@ -218,6 +218,26 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 								),
 							),
 						),
+						'blog_page' => [
+							'description' => __( 'Blog page.' ),
+							'type'        => 'object',
+							'context'     => [ 'view' ],
+							'readonly'    => true,
+							'properties'  => [
+								'id' => [
+									'description' => __( 'Blog page ID.', 'bridge' ),
+									'type'        => 'integer',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								],
+								'url' => [
+									'description' => __( 'Blog page URL.', 'bridge' ),
+									'type'        => 'string',
+									'context'     => array( 'view' ),
+									'readonly'    => true,
+								],
+							],
+						],
 					),
 				),
 			),
