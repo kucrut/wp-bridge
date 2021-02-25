@@ -8,24 +8,22 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 	 */
 	protected $namespace = 'bridge/v1';
 
-
 	/**
 	 * Register routes.
 	 */
 	public function register_routes() {
-		register_rest_route( $this->namespace, '/info' , array(
-			array(
+		register_rest_route( $this->namespace, '/info', [
+			[
 				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_item' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'                => array(
-					'context' => $this->get_context_param( array( 'default' => 'view' ) ),
-				),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+				'callback'            => [ $this, 'get_item' ],
+				'permission_callback' => [ $this, 'get_item_permissions_check' ],
+				'args'                => [
+					'context' => $this->get_context_param( [ 'default' => 'view' ] ),
+				],
+			],
+			'schema' => [ $this, 'get_public_item_schema' ],
+		] );
 	}
-
 
 	/**
 	 * Check if a given request has access to read /menus.
@@ -38,7 +36,7 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 			return new WP_Error(
 				'rest_forbidden_context',
 				__( 'Sorry, you are only allowed to view.' ),
-				array( 'status' => rest_authorization_required_code() )
+				[ 'status' => rest_authorization_required_code() ]
 			);
 		}
 
@@ -92,26 +90,26 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function get_item( $request ) {
-		$data = array(
+		$data = [
 			'url'         => get_option( 'siteurl' ),
 			'home'        => home_url(),
 			'name'        => get_option( 'blogname' ),
 			'description' => get_option( 'blogdescription' ),
 			'lang'        => get_bloginfo( 'language' ),
 			'html_dir'    => ( function_exists( 'is_rtl' ) && is_rtl() ) ? 'rtl' : 'ltr',
-			'settings'    => array(
-				'archive' => array(
+			'settings'    => [
+				'archive' => [
 					'per_page' => absint( get_option( 'posts_per_page' ) ),
-				),
-				'comments' => array(
+				],
+				'comments' => [
 					'per_page'      => absint( get_option( 'comments_per_page' ) ),
 					'threads'       => (bool) get_option( 'thread_comments' ),
 					'threads_depth' => absint( get_option( 'thread_comments_depth' ) ),
-				),
+				],
 				'blog_page'  => $this->get_blog_page(),
 				'front_page' => $this->get_front_page(),
-			),
-		);
+			],
+		];
 
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
@@ -124,100 +122,99 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 		return apply_filters( 'bridge_rest_info', $response );
 	}
 
-
 	/**
 	 * Get site info's schema, conforming to JSON Schema.
 	 *
 	 * @return array
 	 */
 	public function get_item_schema() {
-		$schema = array(
+		$schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => 'info',
 			'type'       => 'object',
-			'properties' => array(
-				'url' => array(
+			'properties' => [
+				'url' => [
 					'description' => __( 'Site URL.' ),
 					'type'        => 'string',
-					'context'     => array( 'view' ),
+					'context'     => [ 'view' ],
 					'readonly'    => true,
-				),
-				'home' => array(
+				],
+				'home' => [
 					'description' => __( 'Home URL.' ),
 					'type'        => 'string',
-					'context'     => array( 'view' ),
+					'context'     => [ 'view' ],
 					'readonly'    => true,
-				),
-				'name' => array(
+				],
+				'name' => [
 					'description' => __( 'The name for the object.' ),
 					'type'        => 'string',
-					'context'     => array( 'view' ),
+					'context'     => [ 'view' ],
 					'readonly'    => true,
-				),
-				'description' => array(
+				],
+				'description' => [
 					'description' => __( 'The description for the resource.' ),
 					'type'        => 'string',
-					'context'     => array( 'view' ),
+					'context'     => [ 'view' ],
 					'readonly'    => true,
-				),
-				'lang' => array(
+				],
+				'lang' => [
 					'description' => __( 'Site language.' ),
 					'type'        => 'string',
-					'context'     => array( 'view' ),
+					'context'     => [ 'view' ],
 					'readonly'    => true,
-				),
-				'html_dir' => array(
+				],
+				'html_dir' => [
 					'description' => __( 'HTML direction.' ),
 					'type'        => 'string',
-					'context'     => array( 'view' ),
+					'context'     => [ 'view' ],
 					'readonly'    => true,
-				),
-				'settings' => array(
+				],
+				'settings' => [
 					'description' => __( 'Site settings.' ),
 					'type'        => 'object',
-					'context'     => array( 'view' ),
+					'context'     => [ 'view' ],
 					'readonly'    => true,
-					'properties'  => array(
-						'archive' => array(
+					'properties'  => [
+						'archive' => [
 							'description' => __( 'Archive settings.' ),
 							'type'        => 'object',
-							'context'     => array( 'view' ),
+							'context'     => [ 'view' ],
 							'readonly'    => true,
-							'properties'  => array(
-								'per_page' => array(
+							'properties'  => [
+								'per_page' => [
 									'description' => __( 'Posts per page.' ),
 									'type'        => 'integer',
-									'context'     => array( 'view' ),
+									'context'     => [ 'view' ],
 									'readonly'    => true,
-								),
-							),
-						),
-						'comments' => array(
+								],
+							],
+						],
+						'comments' => [
 							'description' => __( 'Comments settings.' ),
 							'type'        => 'object',
-							'context'     => array( 'view' ),
+							'context'     => [ 'view' ],
 							'readonly'    => true,
-							'properties'  => array(
-								'per_page' => array(
+							'properties'  => [
+								'per_page' => [
 									'description' => __( 'Comments per page.' ),
 									'type'        => 'integer',
-									'context'     => array( 'view' ),
+									'context'     => [ 'view' ],
 									'readonly'    => true,
-								),
-								'threads' => array(
+								],
+								'threads' => [
 									'description' => __( 'Whether or not threaded comments is enabled.' ),
 									'type'        => 'boolean',
-									'context'     => array( 'view' ),
+									'context'     => [ 'view' ],
 									'readonly'    => true,
-								),
-								'threads_depth' => array(
+								],
+								'threads_depth' => [
 									'description' => __( 'Comments threads depth.' ),
 									'type'        => 'integer',
-									'context'     => array( 'view' ),
+									'context'     => [ 'view' ],
 									'readonly'    => true,
-								),
-							),
-						),
+								],
+							],
+						],
 						'blog_page' => [
 							'description' => __( 'Blog page.' ),
 							'type'        => 'object',
@@ -227,13 +224,13 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 								'id' => [
 									'description' => __( 'Blog page ID.', 'bridge' ),
 									'type'        => 'integer',
-									'context'     => array( 'view' ),
+									'context'     => [ 'view' ],
 									'readonly'    => true,
 								],
 								'url' => [
 									'description' => __( 'Blog page URL.', 'bridge' ),
 									'type'        => 'string',
-									'context'     => array( 'view' ),
+									'context'     => [ 'view' ],
 									'readonly'    => true,
 								],
 							],
@@ -247,21 +244,21 @@ class Bridge_REST_Info_Controller extends WP_REST_Controller {
 								'id' => [
 									'description' => __( 'Front page ID.', 'bridge' ),
 									'type'        => 'integer',
-									'context'     => array( 'view' ),
+									'context'     => [ 'view' ],
 									'readonly'    => true,
 								],
 								'url' => [
 									'description' => __( 'Front page URL.', 'bridge' ),
 									'type'        => 'string',
-									'context'     => array( 'view' ),
+									'context'     => [ 'view' ],
 									'readonly'    => true,
 								],
 							],
 						],
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 
 		return $schema;
 	}

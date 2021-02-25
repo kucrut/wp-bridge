@@ -11,8 +11,14 @@
     "authors": [
         {
             "name": "Dzikri Aziz",
-            "email": "kvcrvt@gmail.com",
+            "email": "dzikri.aziz@gmail.com",
             "homepage": "https://kucrut.org"
         }
-    ]
-}
+    ],
+    "require-dev": {
+        "humanmade/coding-standards": "^1.1"
+    },
+    "scripts": {
+      "lint": "phpcs ."
+    }
+  }

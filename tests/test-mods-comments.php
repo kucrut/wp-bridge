@@ -5,26 +5,26 @@ class Bridge_Test_Mods_Comments extends Bridge_Test_Case {
 	 * @covers ::bridge_rest_index
 	 */
 	public function test_bridge_rest_comments() {
-		$post_id = $this->factory->post->create( array(
+		$post_id = $this->factory->post->create( [
 			'post_title' => 'Yo!',
-		));
-		$parent_comment_id = $this->factory->comment->create( array(
+		]);
+		$parent_comment_id = $this->factory->comment->create( [
 			'comment_post_ID' => $post_id,
 			'comment_author' => 'Bridge',
 			'comment_author_email' => 'bridge@local.dev',
 			'comment_content' => 'Lorem ipsum dolor sit amet bleh bleh.',
-		));
-		$child_comment_id = $this->factory->comment->create( array(
+		]);
+		$child_comment_id = $this->factory->comment->create( [
 			'comment_post_ID' => $post_id,
 			'comment_parent' => $parent_comment_id,
 			'comment_author' => 'Jeff Bridges',
 			'comment_author_email' => 'jeff.bridge@local.dev',
 			'comment_content' => 'Lorem ipsum dolor sit amet bleh bleh. :P',
-		));
+		]);
 
-		$request  = new WP_REST_Request( 'GET', '/wp/v2/comments', array(
+		$request = new WP_REST_Request( 'GET', '/wp/v2/comments', [
 			'post' => $post_id,
-		) );
+		] );
 		$request->set_header( 'X-Requested-With', $this->client_id );
 		$response = $this->server->dispatch( $request );
 		$data     = $response->get_data();

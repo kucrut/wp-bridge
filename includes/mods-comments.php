@@ -2,13 +2,11 @@
 
 /**
  * Modify results of API Request to comments
- *
  */
 class Bridge_Rest_Mods_Comments {
 	public static function init() {
-		add_filter( 'rest_prepare_comment', array( __CLASS__, 'modify_comment_data' ), 10, 3 );
+		add_filter( 'rest_prepare_comment', [ __CLASS__, 'modify_comment_data' ], 10, 3 );
 	}
-
 
 	/**
 	 * Modify comment data
@@ -40,7 +38,6 @@ class Bridge_Rest_Mods_Comments {
 		return $response;
 	}
 
-
 	/**
 	 * Get comment's formatted date
 	 *
@@ -55,7 +52,6 @@ class Bridge_Rest_Mods_Comments {
 		);
 	}
 
-
 	/**
 	 * Get number of child comments
 	 *
@@ -63,12 +59,11 @@ class Bridge_Rest_Mods_Comments {
 	 * @return int
 	 */
 	protected static function get_children_count( $comment ) {
-		return $comment->get_children( array(
+		return $comment->get_children( [
 			'status' => 'approve',
 			'count'  => true,
-		));
+		]);
 	}
-
 
 	/**
 	 *  Get comment reply link

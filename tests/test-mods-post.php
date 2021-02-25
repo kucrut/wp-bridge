@@ -17,44 +17,42 @@ class Bridge_Test_Mods_Post extends Bridge_Test_Case {
 	 */
 	protected $attachment;
 
-
 	public function setUp() {
 		parent::setUp();
 
-		wp_set_current_user( $this->factory->user->create( array( 'role' => 'administrator' ) ) );
+		wp_set_current_user( $this->factory->user->create( [ 'role' => 'administrator' ] ) );
 
 		$tag = get_term_by( 'id', $this->factory->tag->create(), 'post_tag' );
 		$cat = get_term_by( 'id', $this->factory->category->create(), 'category' );
 
-		$post_id = $this->factory->post->create( array(
+		$post_id = $this->factory->post->create( [
 			'post_content'  => sprintf(
 				'Some content with <a href="%s/about">internal URL</a> and <script src="//google.com/ga.js"></script>',
 				home_url()
 			),
-			'post_category' => array( $cat->term_id ),
-			'tags_input'    => array( $tag->term_id ),
-			'tax_input'     => array(
-				'post_format' => array( 'aside' ),
-			),
-		));
+			'post_category' => [ $cat->term_id ],
+			'tags_input'    => [ $tag->term_id ],
+			'tax_input'     => [
+				'post_format' => [ 'aside' ],
+			],
+		]);
 
 		$this->post = get_post( $post_id );
-		$this->post_terms = array(
+		$this->post_terms = [
 			'categories' => $cat->slug,
 			'tags'       => $tag->slug,
 			'formats'    => 'aside',
-		);
+		];
 
 		$orig_file = dirname( __FILE__ ) . '/data/canola.jpg';
 		$test_file = '/tmp/canola.jpg';
 		copy( $orig_file, $test_file );
 
-		$this->attachment = get_post( $this->factory->attachment->create_object( $test_file, $this->post->ID, array(
+		$this->attachment = get_post( $this->factory->attachment->create_object( $test_file, $this->post->ID, [
 			'post_mime_type' => 'image/jpeg',
 			'post_excerpt'   => 'A sample caption',
-		) ) );
+		] ) );
 	}
-
 
 	public function test_post() {
 		$request = new WP_REST_Request( 'GET', '/wp/v2/posts/' . $this->post->ID );
@@ -88,17 +86,16 @@ class Bridge_Test_Mods_Post extends Bridge_Test_Case {
 		}
 	}
 
-
 	public function test_preview() {
 		$new_title = 'Post revised';
 		$new_content = 'Random content for post';
 		$rendered_content = apply_filters( 'the_content', $new_content );
 
-		wp_update_post( array(
+		wp_update_post( [
 			'ID'           => $this->post->ID,
 			'post_title'   => $new_title,
 			'post_content' => $new_content,
-		));
+		]);
 
 		$request = new WP_REST_Request( 'GET', '/wp/v2/posts/' . $this->post->ID );
 		$request->set_param( 'preview', 1 );
@@ -111,7 +108,6 @@ class Bridge_Test_Mods_Post extends Bridge_Test_Case {
 		$this->assertEquals( $new_content, $data['content']['raw'] );
 		$this->assertEquals( $rendered_content, $data['content']['rendered'] );
 	}
-
 
 	public function test_attachment() {
 		$request = new WP_REST_Request( 'GET', '/wp/v2/media/' . $this->attachment->ID );

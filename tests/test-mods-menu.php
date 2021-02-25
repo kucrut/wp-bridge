@@ -8,25 +8,24 @@ class Bridge_Test_Mods_Menu extends Bridge_Test_Case {
 	 * @return object Nav menu object.
 	 */
 	protected function create_menu() {
-		$post_id = self::factory()->post->create( array( 'post_title' => 'Hello World' ) );
+		$post_id = self::factory()->post->create( [ 'post_title' => 'Hello World' ] );
 		$menu_id = wp_create_nav_menu( 'Primary' );
-		$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
+		$item_id = wp_update_nav_menu_item( $menu_id, 0, [
 			'menu-item-type'      => 'post_type',
 			'menu-item-object'    => 'post',
 			'menu-item-object-id' => $post_id,
 			'menu-item-title'     => 'Hello',
 			'menu-item-status'    => 'publish',
-		) );
+		] );
 
-		set_theme_mod( 'nav_menu_locations', array(
+		set_theme_mod( 'nav_menu_locations', [
 			$this->menu_location => $menu_id,
-		) );
+		] );
 
 		$menu = wp_get_nav_menu_object( $menu_id );
 
 		return $menu;
 	}
-
 
 	/**
 	 * @covers Bridge_Rest_Mods_Menu::modify_menu_data
@@ -36,10 +35,10 @@ class Bridge_Test_Mods_Menu extends Bridge_Test_Case {
 			return;
 		}
 
-		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
+		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 		$menu = $this->create_menu();
 
-		$request  = new WP_REST_Request( 'GET', '/bridge/v1/menus/' . $menu->term_id );
+		$request = new WP_REST_Request( 'GET', '/bridge/v1/menus/' . $menu->term_id );
 		$request->set_header( 'X-Requested-With', 'minnie' );
 		$response = $this->server->dispatch( $request );
 

@@ -13,7 +13,6 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 		$this->assertCount( 1, $routes['/bridge/v1/info'] );
 	}
 
-
 	protected function get_options() {
 		$request = new WP_REST_Request( 'OPTIONS', '/bridge/v1/info' );
 		$response = $this->server->dispatch( $request );
@@ -21,7 +20,6 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 
 		return $data;
 	}
-
 
 	/**
 	 *  Test item schema
@@ -34,7 +32,6 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 		$this->assertArrayHasKey( 'schema', $data );
 		$this->assertArrayHasKey( 'properties', $data['schema'] );
 	}
-
 
 	protected function compare_schema_with_data( $properties, $data ) {
 		foreach ( $properties as $key => $props ) {
@@ -52,7 +49,6 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 			$this->assertEquals( $properties[ $key ]['type'], $type );
 		}
 	}
-
 
 	/**
 	 *  Make sure the route returns the correct data
@@ -94,7 +90,6 @@ class Bridge_Test_REST_Info_Controller extends Bridge_Test_Case {
 		$this->assertArrayHasKey( 'threads_depth', $data['settings']['comments'] );
 		$this->assertEquals( absint( get_option( 'thread_comments_depth' ) ), $data['settings']['comments']['threads_depth'] );
 	}
-
 
 	/**
 	 *  Make sure the response can be filtered
